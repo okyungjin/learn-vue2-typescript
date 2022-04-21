@@ -5,6 +5,7 @@
   - [Presets](#presets)
 - [Build Setup](#build-setup)
 - [Dev Notes](#dev-notes)
+  - [클래스 문법을 권장하지 않는 이유](#클래스-문법을-권장하지-않는-이유)
 # About Project
 ## 소개
 Learn Vue.js + TypeScript
@@ -28,4 +29,13 @@ npm run build
 npm run lint
 ```
 # Dev Notes
+## 클래스 문법을 권장하지 않는 이유
+다음 자료들에 따르면 Class API 보다 Function-base Component 사용을 권장하고 있다.
+
+- https://github.com/vuejs/rfcs/pull/17
+- https://github.com/vuejs/rfcs/pull/42
+- https://github.com/vuejs/rfcs/issues/63
+
+`vue-property-decorator` 를 사용하는 것보다 extends 문법을 사용하는 방향으로 프로젝트를 진행할 예정이다.
+
 
