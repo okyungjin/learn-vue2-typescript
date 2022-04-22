@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Vue Todo with TypeScript</h1>
-    <TodoInput></TodoInput>
+    <TodoInput :item="todoText" @input="updateTodoText" @add="addTodoItem"></TodoInput>
   </div>
 </template>
 
@@ -15,6 +15,19 @@ export default Vue.extend({
     return {
       todoText: '',
     };
+  },
+  methods: {
+    updateTodoText(value: string): void {
+      this.todoText = value;
+    },
+    addTodoItem(): void {
+      const value = this.todoText;
+      localStorage.setItem(value, value);
+      this.initTodoText();
+    },
+    initTodoText(): void {
+      this.todoText = '';
+    },
   },
 });
 </script>

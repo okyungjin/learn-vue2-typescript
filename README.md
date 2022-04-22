@@ -6,6 +6,9 @@
 - [Build Setup](#build-setup)
 - [Dev Notes](#dev-notes)
   - [클래스 문법을 권장하지 않는 이유](#클래스-문법을-권장하지-않는-이유)
+  - [Input Event 처리하는 방법](#input-event-처리하는-방법)
+    - [1) if로 check](#1-if로-check)
+    - [2) Type Assertion 사용](#2-type-assertion-사용)
 # About Project
 ## 소개
 Learn Vue.js + TypeScript
@@ -38,4 +41,21 @@ npm run lint
 
 `vue-property-decorator` 를 사용하는 것보다 extends 문법을 사용하는 방향으로 프로젝트를 진행할 예정이다.
 
-
+## Input Event 처리하는 방법
+`evt.target` 값이 null이 아닌지 보장하려면 다음 두 방법을 사용할 수 있다.
+**가급적 1번 방법을 사용하는 것이 좋다.**
+### 1) if로 check
+```ts
+onInputChanged(evt: InputEvent): void {
+  if (!evt.target.value)
+    return
+  this.$emit('input', evtTarget.value);
+},
+```
+### 2) Type Assertion 사용
+```ts
+onInputChanged(evt: InputEvent): void {
+  const evtTarget = evt.target as HTMLInputElement; // type assertion
+  this.$emit('input', evtTarget.value);
+},
+```
