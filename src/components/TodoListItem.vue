@@ -13,8 +13,8 @@ import { ITodo } from '@/interface';
 
 export default Vue.extend({
   computed: {
-    classCompleted(): string {
-      return this.todoItem.done ? 'complete' : '';
+    classCompleted(): string | null {
+      return this.todoItem.done ? 'complete' : null;
     },
   },
   methods: {
