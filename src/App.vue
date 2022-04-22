@@ -67,7 +67,11 @@ export default Vue.extend({
       this.fetchTodoItems();
     },
     fetchTodoItems(): void {
-      this.todoItems = storage.fetch();
+      this.todoItems = storage.fetch().sort((a, b) => {
+        if (a.title < b.title) return -1;
+        if (a.title > b.title) return 1;
+        return 0;
+      });
     },
     initTodoText(): void {
       this.todoText = '';
