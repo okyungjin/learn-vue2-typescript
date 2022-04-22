@@ -10,19 +10,19 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  props: {
-    item: {
-      type: String,
-      required: true,
-    },
-  },
   methods: {
+    addTodo(): void {
+      this.$emit('add');
+    },
     onInputChanged(evt: InputEvent): void {
       const evtTarget = evt.target as HTMLInputElement; // type assertion
       this.$emit('input', evtTarget.value);
     },
-    addTodo(): void {
-      this.$emit('add');
+  },
+  props: {
+    item: {
+      required: true,
+      type: String,
     },
   },
 });
