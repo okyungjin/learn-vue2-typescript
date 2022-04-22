@@ -28,20 +28,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import { ITodo } from '@/interface';
+import { storage } from '@/utils/localStorage';
 import TodoInput from './components/TodoInput.vue';
 import TodoListItem from './components/TodoListItem.vue';
-
-const STORAGE_KEY = 'vue-todo-ts-v1';
-const storage = {
-  fetch(): ITodo[] {
-    const todoItems: string = localStorage.getItem(STORAGE_KEY) || '[]';
-    return JSON.parse(todoItems);
-  },
-  save(todoItems: ITodo[]) {
-    const parsed = JSON.stringify(todoItems);
-    localStorage.setItem(STORAGE_KEY, parsed);
-  },
-};
 
 export default Vue.extend({
   components: { TodoInput, TodoListItem },
@@ -62,12 +51,12 @@ export default Vue.extend({
         title: value,
       };
       this.todoItems.push(newTodoItem);
-      storage.save(this.todoItems);
+      storage.save<ITodo>(this.todoItems);
       this.initTodoText();
       this.fetchTodoItems();
     },
     fetchTodoItems(): void {
-      this.todoItems = storage.fetch().sort((a, b) => {
+      this.todoItems = storage.fetch<ITodo>().sort((a, b) => {
         if (a.title < b.title) return -1;
         if (a.title > b.title) return 1;
         return 0;
@@ -78,7 +67,7 @@ export default Vue.extend({
     },
     removeTodoItem(index: number): void {
       this.todoItems.splice(index, 1);
-      storage.save(this.todoItems);
+      storage.save<ITodo>(this.todoItems);
     },
     toggleTodoItemComplete(todoItem: ITodo, index: number) {
       const toggled: ITodo = {
@@ -86,7 +75,7 @@ export default Vue.extend({
         done: !todoItem.done,
       };
       this.todoItems.splice(index, 1, toggled);
-      storage.save(this.todoItems);
+      storage.save<ITodo>(this.todoItems);
     },
     updateTodoText(value: string): void {
       this.todoText = value;
