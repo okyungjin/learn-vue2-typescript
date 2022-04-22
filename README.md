@@ -9,6 +9,8 @@
   - [Input Event 처리하는 방법](#input-event-처리하는-방법)
     - [1) if로 check](#1-if로-check)
     - [2) Type Assertion 사용](#2-type-assertion-사용)
+  - [props에 타입 지정하기](#props에-타입-지정하기)
+  - [computed 속성 사용하기](#computed-속성-사용하기)
 # About Project
 ## 소개
 Learn Vue.js + TypeScript
@@ -59,3 +61,33 @@ onInputChanged(evt: InputEvent): void {
   this.$emit('input', evtTarget.value);
 },
 ```
+
+## props에 타입 지정하기
+```ts
+import Vue, { PropType } from 'vue';
+
+export default Vue.extend({
+  props: {
+    todoItem: {
+      required: true,
+      type: Object as PropType<ITodo>,
+    },
+  },
+});
+```
+
+## computed 속성 사용하기
+`computed` 속성을 사용할 때 주의할 점은 **return type을 꼭 명시해야 한다**는 것이다.
+retun type을 명시하지 않으면 아래와 같은 오류가 발생한다.
+
+```ts
+computed: {
+  classCompleted() {
+    return this.todoItem.done ? 'complete' : null;
+  },
+},
+```
+
+<img width="843" alt="computed-error" src="https://user-images.githubusercontent.com/31913666/164619796-4ed14c35-4e9b-41d5-86ec-a95c6505f79b.png">
+
+

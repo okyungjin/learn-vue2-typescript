@@ -1,22 +1,42 @@
 <template>
-  <div>
-    <ul>
-      <li v-for="(item, index) in items" :key="index">{{ item }}</li>
-    </ul>
-  </div>
+  <li>
+    <span class="item" :class="classCompleted" @click="toggleItem">
+      {{ todoItem.title }}
+    </span>
+    <button @click="removeTodoItem">삭제</button>
+  </li>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { PropType } from 'vue';
+import { ITodo } from '@/interface';
 
 export default Vue.extend({
-  props: {
-    items: {
-      type: Array,
-      //   default: [],
+  computed: {
+    classCompleted(): string {
+      return this.todoItem.done ? 'complete' : '';
     },
+  },
+  methods: {
+    removeTodoItem() {
+      this.$emit('remove', this.index);
+    },
+    toggleItem() {
+      this.$emit('toggle', this.todoItem, this.index);
+    },
+  },
+  props: {
+    index: Number,
+    todoItem: Object as PropType<ITodo>,
   },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.item {
+  cursor: pointer;
+}
+.complete {
+  text-decoration: line-through;
+}
+</style>

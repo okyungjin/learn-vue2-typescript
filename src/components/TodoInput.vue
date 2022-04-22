@@ -1,7 +1,13 @@
 <template>
   <div>
     <label for="todo-input"></label>
-    <input id="todo-input" type="text" :value="item" @input="onInputChanged" />
+    <input
+      id="todo-input"
+      type="text"
+      :value="item"
+      @input="onInputChanged"
+      @keyup.enter="addTodo"
+    />
     <button @click="addTodo" type="button">add</button>
   </div>
 </template>
@@ -12,6 +18,7 @@ import Vue from 'vue';
 export default Vue.extend({
   methods: {
     addTodo(): void {
+      if (!this.item) return;
       this.$emit('add');
     },
     onInputChanged(evt: InputEvent): void {
